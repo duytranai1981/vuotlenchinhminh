@@ -1,0 +1,19 @@
+{
+  "bai_so": 1,
+  "ten_bai": "Phân số",
+  "muc_tieu": "Nhận biết khái niệm phân số và biểu diễn phân số bằng hình ảnh.",
+  "ly_thuyet": "Phân số là một cách biểu diễn phần của một tổng thể, gồm tử số và mẫu số. Ví dụ: 1/2, 3/4...",
+  "vi_du": [
+    "1/2 là phân số biểu thị một nửa hình tròn.",
+    "3/4 biểu thị ba phần tư hình vuông."
+  ],
+  "bai_tap": [
+    "Viết phân số biểu thị phần được tô màu trong hình sau (giả sử có minh họa).",
+    "Cho biết tử số và mẫu số của các phân số sau: 5/8, 2/3."
+  ],
+  "tag_ky_nang": [
+    "phân số",
+    "biểu diễn",
+    "khái niệm"
+  ]
+}

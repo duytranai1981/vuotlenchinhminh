@@ -1,0 +1,18 @@
+{
+  "bai_so": 2,
+  "ten_bai": "Phân số bằng nhau",
+  "muc_tieu": "Hiểu và vận dụng tính chất phân số bằng nhau trong thực hành.",
+  "ly_thuyet": "Hai phân số bằng nhau nếu chúng biểu diễn cùng một giá trị. Ví dụ: 1/2 = 2/4 = 3/6.",
+  "vi_du": [
+    "1/2 và 2/4 là hai phân số bằng nhau.",
+    "Nếu nhân cả tử và mẫu của 1/3 với 2, ta được 2/6 – vẫn bằng 1/3."
+  ],
+  "bai_tap": [
+    "Điền số thích hợp vào chỗ trống: 2/3 = .../6",
+    "Chứng minh rằng 4/8 = 1/2."
+  ],
+  "tag_ky_nang": [
+    "phân số bằng nhau",
+    "tính chất phân số"
+  ]
+}

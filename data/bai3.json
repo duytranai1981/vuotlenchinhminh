@@ -1,0 +1,18 @@
+{
+  "bai_so": 3,
+  "ten_bai": "Rút gọn phân số",
+  "muc_tieu": "Biết cách rút gọn phân số về dạng tối giản.",
+  "ly_thuyet": "Rút gọn phân số là chia cả tử và mẫu cho cùng một ước chung để thu được phân số đơn giản hơn.",
+  "vi_du": [
+    "6/8 rút gọn được thành 3/4 vì chia cả tử và mẫu cho 2.",
+    "9/12 rút gọn thành 3/4 vì chia cả tử và mẫu cho 3."
+  ],
+  "bai_tap": [
+    "Rút gọn các phân số sau: 10/15, 8/12, 16/20.",
+    "Tìm phân số tối giản của 18/27."
+  ],
+  "tag_ky_nang": [
+    "rút gọn phân số",
+    "tối giản"
+  ]
+}

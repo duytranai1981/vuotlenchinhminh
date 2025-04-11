@@ -1,0 +1,17 @@
+[
+  {
+    "bai_so": 1,
+    "ten_bai": "Phân số",
+    "file": "data/bai1.json"
+  },
+  {
+    "bai_so": 2,
+    "ten_bai": "Phân số bằng nhau",
+    "file": "data/bai2.json"
+  },
+  {
+    "bai_so": 3,
+    "ten_bai": "Rút gọn phân số",
+    "file": "data/bai3.json"
+  }
+]
