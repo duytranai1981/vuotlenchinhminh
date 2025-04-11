@@ -1,10 +1,135 @@
 
 <!DOCTYPE html>
-<!-- Kiệt có thể dán lại toàn bộ nội dung index học bài ở đây nếu cần, đây là placeholder -->
 <html lang="vi">
-<head><meta charset="UTF-8"><title>Học bài</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Giá Sư Toán 6</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; display: flex; gap: 20px; }
+    .sidebar { width: 30%; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .lesson-container { flex: 1; background: white; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .lesson-title { font-size: 20px; font-weight: bold; color: #2c3e50; }
+    .lesson-item { margin-bottom: 12px; cursor: pointer; color: #2980b9; display: flex; justify-content: space-between; align-items: center; }
+    .lesson-item:hover { text-decoration: underline; }
+    .lesson-status { font-size: 12px; color: green; margin-left: 8px; }
+    .filter-group { margin-bottom: 16px; }
+    .filter-group input, .filter-group select { width: 100%; padding: 8px; margin-top: 6px; }
+    h4 { margin-top: 20px; color: #34495e; }
+    .tags { margin-top: 10px; font-style: italic; color: #7f8c8d; }
+    .section { margin-bottom: 20px; }
+    .highlight { background: #ecf0f1; padding: 10px; border-left: 4px solid #2980b9; }
+  </style>
+</head>
 <body>
-  <h1>Đây là giao diện học bài (hoc.html)</h1>
-  <p>Kiệt sẽ thay nội dung từ index học vào đây để dùng chính thức</p>
+  <div class="container">
+    <div class="sidebar">
+      <h3>Danh sách bài học</h3>
+      <div class="filter-group">
+        <label>Tìm kiếm bài học</label>
+        <input type="text" id="searchBox" placeholder="Nhập tên bài hoặc số bài...">
+      </div>
+      <div class="filter-group">
+        <label>Lọc theo chương</label>
+        <select id="chapterFilter">
+          <option value="">Tất cả</option>
+          <option value="Phân số">Chương IV – Phân số</option>
+          <option value="Số thập phân">Chương V – Số thập phân</option>
+          <option value="Biểu đồ">Chương VI – Biểu đồ</option>
+        </select>
+      </div>
+      <div id="lesson-list"></div>
+    </div>
+    <div class="lesson-container" id="lesson">Chọn một bài học để bắt đầu.</div>
+  </div>
+
+  <script>
+    let allLessons = [];
+
+    async function loadLessonList() {
+      const res = await fetch('lessonList.json');
+      allLessons = await res.json();
+      renderLessonList();
+    }
+
+    function renderLessonList() {
+      const listEl = document.getElementById('lesson-list');
+      const searchText = document.getElementById('searchBox').value.toLowerCase();
+      const chapter = document.getElementById('chapterFilter').value.toLowerCase();
+
+      listEl.innerHTML = '';
+      allLessons.forEach(lesson => {
+        const title = `Bài ${lesson.bai_so}: ${lesson.ten_bai}`;
+        const matchedSearch = title.toLowerCase().includes(searchText);
+        const matchedChapter = chapter === '' || lesson.ten_bai.toLowerCase().includes(chapter);
+        if (matchedSearch && matchedChapter) {
+          const div = document.createElement('div');
+          div.className = 'lesson-item';
+          div.onclick = () => {
+            loadLesson(lesson.file);
+            markAsLearned(lesson.file);
+          };
+
+          const status = document.createElement('span');
+          status.className = 'lesson-status';
+          if (isLearned(lesson.file)) status.textContent = '✓ Đã học';
+
+          div.innerHTML = `<span>${title}</span>`;
+          div.appendChild(status);
+          listEl.appendChild(div);
+        }
+      });
+    }
+
+    async function loadLesson(file) {
+      const res = await fetch(file);
+      const data = await res.json();
+      renderLesson(data);
+      renderLessonList(); // cập nhật lại trạng thái
+    }
+
+    function markAsLearned(file) {
+      const learned = JSON.parse(localStorage.getItem('learnedLessons') || '[]');
+      if (!learned.includes(file)) {
+        learned.push(file);
+        localStorage.setItem('learnedLessons', JSON.stringify(learned));
+      }
+    }
+
+    function isLearned(file) {
+      const learned = JSON.parse(localStorage.getItem('learnedLessons') || '[]');
+      return learned.includes(file);
+    }
+
+    function renderLesson(data) {
+      const container = document.getElementById('lesson');
+      container.innerHTML = `
+        <div class="lesson-title">Bài ${data.bai_so}: ${data.ten_bai}</div>
+        <div class="section">
+          <h4>Mục tiêu</h4>
+          <div class="highlight">${data.muc_tieu}</div>
+        </div>
+        <div class="section">
+          <h4>Lý thuyết</h4>
+          <p>${data.ly_thuyet}</p>
+        </div>
+        <div class="section">
+          <h4>Ví dụ</h4>
+          <ul>${data.vi_du.map(v => `<li>${v}</li>`).join('')}</ul>
+        </div>
+        <div class="section">
+          <h4>Bài tập</h4>
+          <ol>${data.bai_tap.map(bt => `<li>${bt}</li>`).join('')}</ol>
+        </div>
+        <div class="tags">Tags: ${data.tag_ky_nang.join(', ')}</div>
+      `;
+    }
+
+    document.getElementById('searchBox').addEventListener('input', renderLessonList);
+    document.getElementById('chapterFilter').addEventListener('change', renderLessonList);
+
+    loadLessonList();
+  </script>
 </body>
 </html>
